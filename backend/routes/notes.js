@@ -6,7 +6,7 @@ router.get('/' , (req,res)=>{
 
     
      
-    res.json([])
+    res.json()
 
 })
 
