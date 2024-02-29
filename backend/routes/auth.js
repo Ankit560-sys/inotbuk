@@ -4,13 +4,14 @@ const { body, validationResult } = require('express-validator');
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fetchuser = require('../middleware/fetchuser')
 const router = express.Router();
 
 const JWT_secret = "ankitkatoken$";
 
 
 
-//Create a user using :: "/api/auth/createuser" , No Login required
+//ROUTE 1 :--- Create a user using :: "/api/auth/createuser" , No Login required
 router.post('/createuser' ,[
     body('name','Enter a valid Name').isLength({min:5}),
     body('email','Enter a valid email').isEmail(),
@@ -67,7 +68,7 @@ router.post('/createuser' ,[
     //  res.json(user);
     }catch(error){
          console.log(error.message);
-         res.status(500).send("Some error occurred ")
+         res.status(500).send("Internal server error ")
 }
 
 
@@ -75,12 +76,89 @@ router.post('/createuser' ,[
 });
 
 
+//ROUTE 2:--- Authenticate  a user using :: "/api/auth/login" 
+router.post('/login' ,[
+
+    body('email','Enter a valid email').isEmail(),
+    body('password','Password cannot be blank').isLength({min:5})
+], async(req,res)=>{
+
+    // If there are errors ,return bad request and  the errors :   
+    const errors  = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({errors: errors.array() });
+
+  }
 
 
-    
+    const {email , password} = req.body ;
+
+
+  try{
+
+
+
+    let user  = await User.findOne({email})
+
+    if(!user){
+
+       return  res.status(400).json({errors : "Login with the correct credentials"});
+    }
+
+    const passwordCompare =await bcrypt.compare(password , user.password)
+
+     if(!passwordCompare){
+        return res.status(400).json({error : "login with correct credentials"})
+
+    }
+
+
+    const data={
+        user:{
+            id: user.id
+        }
+    }
+
+    const authToken = jwt.sign(data, JWT_secret);
+    //  console.log(jwtdata);
+ 
+    res.json({authToken});
+
+}catch(error){
+
+
+        console.log(error.message);
+        res.status(500).send("Internal server error ")
+
+
+}
+
+  });
+
+
+  // ROUTE 3:---Get loggedin user details using :/api/auth/getuser  Login required 
+
+  router.post('/getuser', fetchuser ,  async(req,res)=>{
+     
+
+    try{
+
+        userId = req.user.id;
+        const user = await User.findById(userId).select('-password')
+        res.send(user);
+
+
+
+    }
+    catch(error){
+        
+        console.log(error.message);
+        res.status(500).send("Internal server error ")
+
+    }
      
  
-
+});
 
 
 module.exports = router ;
