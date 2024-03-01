@@ -80,7 +80,7 @@ router.post('/createuser' ,[
 router.post('/login' ,[
 
     body('email','Enter a valid email').isEmail(),
-    body('password','Password cannot be blank').isLength({min:5})
+    body('password','Password cannot be blank').exists({min:5})
 ], async(req,res)=>{
 
     // If there are errors ,return bad request and  the errors :   
