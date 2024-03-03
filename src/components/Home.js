@@ -17,11 +17,11 @@ const Home = () => {
 
       <h2>Add a Note</h2>
 
-      <div class="container my-3">
+      <div className="container my-3">
 
       <form>
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label">
            Title
           </label>
           <input
@@ -33,7 +33,7 @@ const Home = () => {
          
         </div>
         <div className="mb-3">
-          <label for="exampleInputPassword1" className="form-label">
+          <label htmlFor="exampleInputPassword1" className="form-label">
             Description
           </label>
           <input
@@ -43,7 +43,7 @@ const Home = () => {
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputPassword1" className="form-label">
+          <label htmlFor="exampleInputPassword1" className="form-label">
             Tag
           </label>
           <input

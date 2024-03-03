@@ -1,24 +1,27 @@
-import React from 'react'
+import React from "react";
 
 const Noteitem = (props) => {
-
-   const {note} = props;
+  const { note } = props;
 
   return (
-    <div class="col-md-3 ">
+    <div className="col-md-3 ">
+      <div className="card my-3">
+        <div className="card-body">
+          <div className="d-flex align-items-center">
+            <h6 className="card-title">{note.title}</h6>
 
-<div class="card my-3" >
+            <i className="fa-solid fa-trash  mx-3"></i>
 
-  <div class="card-body">
-    <h5 class="card-title">{note.title}</h5>
-    <p class="card-text">{note.description} lorem34dvkbav vbab vbibwvbiwv vnvs vjbwbvwvnwv vibvbrvb lorem20</p>
-    
-  </div>
-</div>
+            <i className="fa-solid fa-pen-to-square  mx-3"></i>
+          </div>
 
-
+          <p className="card-text">
+            {note.description} 
+          </p>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Noteitem
+export default Noteitem;

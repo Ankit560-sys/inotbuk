@@ -19,7 +19,7 @@ const Notes = () => {
       <h2>Your Notes</h2>
 
         {notes.map((note)=>
-        {return <Noteitem note={note}/>}
+        {return <Noteitem key={note._id}  note={note}/>}
         
         )}
 
