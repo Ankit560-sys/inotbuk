@@ -1,3 +1,4 @@
+
 import NoteContext from "./noteContext";
 import { useState } from "react";
 
@@ -84,7 +85,23 @@ const NoteState = (props) => {
 
   //Delete a note
 
-  const deleteNote = (id) => {
+  const deleteNote =  async (id) => {
+
+
+    //API CALL-----
+    
+    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVlMWU2NzM5YWE5NDM0MjhjYjYzZDY5In0sImlhdCI6MTcwOTMwMzQxMn0.lo3eHOXa0eLhKNpSkI6bEduvHEuW5nm7EGuQsunCuLw"
+          
+        },
+       
+       
+      });
+      const json = await response.json();
+      console.log(json)
 
     //for checking the id is taken by this function
 
@@ -104,7 +121,7 @@ const NoteState = (props) => {
     //API CALL-----
     
         const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVlMWU2NzM5YWE5NDM0MjhjYjYzZDY5In0sImlhdCI6MTcwOTMwMzQxMn0.lo3eHOXa0eLhKNpSkI6bEduvHEuW5nm7EGuQsunCuLw"
@@ -113,19 +130,27 @@ const NoteState = (props) => {
          
           body: JSON.stringify({title ,description , tag}), 
         });
-        const json = response.json();
+        const json = await response.json();
+        console.log(json)
     
-
+        let newNotes = JSON.parse(JSON.stringify(notes))
     //Logic to edit in frontend or client side
 
-    for (let index = 0; index < notes.length; index++) {
-        const element = notes[index];
+    for (let index = 0; index < newNotes.length; index++) {
+        const element = newNotes[index];
 
         if( element._id === id){
-            element.title = title ;
-            element.description = description ;
-            element.tag = tag ;
+            newNotes[index].title = title ;
+            newNotes[index].description = description ;
+            newNotes[index].tag = tag ;
+            
+
+            break;
         }
+
+       
+
+        setNotes(newNotes);
         
     }
 
