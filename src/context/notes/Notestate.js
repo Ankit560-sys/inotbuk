@@ -5,14 +5,14 @@ import { useState } from "react";
 const NoteState = (props) => {
 
    const host = "http://localhost:5000" ;
+   const notesInitial = [];
+   const [notes, setNotes] = useState(notesInitial);
 
 
-  const notesInitial = [];
 
 
   
 
-  const [notes, setNotes] = useState(notesInitial);
 
 
    //Get all notes
@@ -33,7 +33,7 @@ const NoteState = (props) => {
       });
       
        const json =  await response.json();
-       console.log(json)
+    //    console.log(json)
 
     setNotes(json);
   };
@@ -65,22 +65,14 @@ const NoteState = (props) => {
         body: JSON.stringify({title ,description , tag}), 
       });
       
-      const json =response.json();
-      console.log(json)
+      const note = await response.json();
+        // console.log(note)
+      setNotes(notes.concat(note));
 
 
 
-   const  note = {
-      id: "65e4070d59174798f322648cdfczcdd",
-      user: "65e1e6739aa943428cb63d69",
-      title: title,
-      description: description,
-      tag: tag,
-      timestamp: "2024-03-03T05:13:49.504Z",
-      __v: 0,
-    };
+  
 
-    setNotes(notes.concat(note));
   };
 
   //Delete a note
@@ -134,10 +126,13 @@ const NoteState = (props) => {
         console.log(json)
     
         let newNotes = JSON.parse(JSON.stringify(notes))
+    
     //Logic to edit in frontend or client side
 
     for (let index = 0; index < newNotes.length; index++) {
         const element = newNotes[index];
+
+        
 
         if( element._id === id){
             newNotes[index].title = title ;

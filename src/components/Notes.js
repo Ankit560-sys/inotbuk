@@ -13,7 +13,7 @@ const Notes = () => {
      // eslint-disable-next-line
   }, []);
 
-  const [note, setnote] = useState({id:"" , etitle:" " , edescription :" "  , etag:" "}); 
+  const [note, setnote] = useState({id:" " , etitle:" " , edescription :" "  , etag:" "}); 
 
   const ref = useRef(null);
 
@@ -126,7 +126,7 @@ const handleClick = (e) =>{
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary" onClick={handleClick}>
+              <button  disabled={note.etitle.length <5 || note.edescription.length < 5} type="button" className="btn btn-primary" onClick={handleClick}>
                 Update
               </button>
             </div>
@@ -135,7 +135,15 @@ const handleClick = (e) =>{
       </div>
 
       <div className="container row">
+
+
         <h2>Your Notes</h2>
+
+        <div className="container mx-3">
+
+         {notes.length === 0 && 'No notes to display'}
+
+         </div>
 
         {notes.map((note) => {
           return (
