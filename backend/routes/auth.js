@@ -15,8 +15,11 @@ const JWT_secret = "ankitkatoken$";
 router.post('/createuser' ,[
     body('name','Enter a valid Name').isLength({min:5}),
     body('email','Enter a valid email').isEmail(),
-    body('password','Enter a valid password').isLength({min:5})
+    body('password','Enter at atleast 5 characters').isLength({min:5})
 ], async(req,res)=>{
+
+
+  let success = false ;
      
 // If there are errors ,return bad request and  the errors :   
     const errors  = validationResult(req);
@@ -35,7 +38,8 @@ router.post('/createuser' ,[
 
   if(user){
 
-   return  res.status(400).json({error : 'Email is already exists'})
+    
+   return  res.status(400).json({success ,error : 'Email is already exists'})
   }
 
   const salt = await  bcrypt.genSalt(10);
@@ -55,11 +59,11 @@ router.post('/createuser' ,[
             id: user.id
         }
      }
-
+          
      const authToken = jwt.sign(data, JWT_secret);
         //  console.log(jwtdata);
-     
-        res.json({authToken})
+        success = true; 
+        res.json({ success ,authToken})
         //   .then( user => res.json(user))
        //   catch(err => {console.log(err)
    
@@ -83,6 +87,8 @@ router.post('/login' ,[
     body('password','Password cannot be blank').exists({min:5})
 ], async(req,res)=>{
 
+      let success = false ;
+
     // If there are errors ,return bad request and  the errors :   
     const errors  = validationResult(req);
   if (!errors.isEmpty()) {
@@ -101,14 +107,15 @@ router.post('/login' ,[
     let user  = await User.findOne({email})
 
     if(!user){
-
-       return  res.status(400).json({errors : "Login with the correct credentials"});
+       success= false ;
+       return  res.status(400).json( { success ,errors : "Login with the correct credentials"});
     }
 
     const passwordCompare =await bcrypt.compare(password , user.password)
 
      if(!passwordCompare){
-        return res.status(400).json({error : "login with correct credentials"})
+       success= false;
+        return res.status(400).json({success ,error : "login with correct credentials"})
 
     }
 
@@ -121,8 +128,8 @@ router.post('/login' ,[
 
     const authToken = jwt.sign(data, JWT_secret);
     //  console.log(jwtdata);
- 
-    res.json({authToken});
+        success = true ;
+    res.json({success , authToken});
 
 }catch(error){
 

@@ -10,12 +10,7 @@ const Navbar = () => {
 
   let location = useLocation();
 
-     useEffect(() => {
-
-      console.log(location.pathname);
-      // eslint-disable-next-line 
     
-  }, [location]);
 
 
   return (
@@ -39,8 +34,9 @@ const Navbar = () => {
        
       </ul>
       <form className="d-flex" role="search">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success" type="submit">Search</button>
+        <Link className='btn btn-primary mx-2' to="/login">Login</Link>
+        <Link className='btn btn-primary' to="/signup">Signup</Link>
+        
       </form>
     </div>
   </div>
