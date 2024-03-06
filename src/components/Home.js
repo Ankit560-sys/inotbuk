@@ -4,7 +4,9 @@ import Notes from "./Notes";
 
 
 
-const Home = () => {
+const Home = (props) => {
+
+  const {showAlert } = props ;
 
    
 
@@ -20,7 +22,7 @@ const Home = () => {
 
       {/* Notes Component from components */}
 
-      <Notes/>
+      <Notes showAlert={showAlert}/>
 
 
 
