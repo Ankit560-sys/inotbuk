@@ -36,16 +36,16 @@ const Signup = (props) => {
     
            //if user login is true then 
            if(json.success){
-    
+              console.log(json.authtoken)
             //Save the auth token in localstorage
-            localStorage.setItem("token", json.authtoken)
+            localStorage.setItem("token", json.authToken)
             navigate("/");
-            props.showAlert("Account created successfully" , "success");
+            props.showAlert(" Account created successfully" , "success ");
     
            }
            else{
             //if user credential is invalid
-            props.showAlert("Invalid details" , "danger")
+            props.showAlert(" Invalid details" , "danger ")
            }
     
        
@@ -66,6 +66,7 @@ const Signup = (props) => {
 
   return (
     <div className="container my-4">
+      <h1>Signup for new user</h1>
       <form onSubmit={handleSubmit} >
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
