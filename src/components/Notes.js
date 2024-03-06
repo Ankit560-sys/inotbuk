@@ -14,13 +14,13 @@ const Notes = (props) => {
     if(localStorage.getItem('token')){
       
       getNotes();
-      // eslint-disable-next-line 
     }
     else{
       navigate("/login")
       
-       
+      
     }
+    // eslint-disable-next-line 
   }, []);
 
   const [note, setnote] = useState({id:" " , etitle:" " , edescription :" "  , etag:" "}); 
