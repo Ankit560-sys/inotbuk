@@ -129,7 +129,8 @@ const handleClick = (e) =>{
           </div>
 
          
-        </form></div>
+        </form>
+        </div>
             <div className="modal-footer">
               <button
                 type="button"

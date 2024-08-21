@@ -46,7 +46,7 @@ const AddNote = (props) => {
               className="form-control"
               id="title"
               name="title"
-              aria-describedby="emailHelp"onChange={onChange} minLength={5} required value={note.title}
+              aria-describedby="emailHelp" onChange={onChange} minLength={5} required value={note.title}
             />
           </div>
           <div className="mb-3">
