@@ -7,7 +7,7 @@ const Login = (props) => {
     const navigate = useNavigate();
   
 
-    const [credentials, setcredentials] = useState({email :" " , password :" "})
+    const [credentials, setcredentials] = useState({email :"" , password :""})
 
 
 

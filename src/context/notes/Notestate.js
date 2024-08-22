@@ -145,9 +145,9 @@ const NoteState = (props) => {
 
        
 
-        setNotes(newNotes);
         
-    }
+      }
+      setNotes(newNotes);
 
 
  
